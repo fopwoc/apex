@@ -1,0 +1,27 @@
+[package]
+name = "wcore"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cfg-if = "1"
+log = "0.4.17"
+ahash = { version = "0.8.3", features = ["compile-time-rng"], default-features = false }
+egui = "0.21.0"
+egui-wgpu = { version = "0.21.0" }
+egui-winit = { version = "0.21.1", features = ["links", "webbrowser", "wayland", "smithay-clipboard", "document-features"], default-features = false }
+winit = "0.28.3"
+wgpu = "0.15.1"
+cgmath = { git = "https://github.com/rustgd/cgmath.git", features = ["bytemuck"] }
+image = { version = "0.24.6", features = ["png", "jpeg"], default-features = false }
+bytemuck = { version = "1.13.1", features = ["derive"] }
+itertools = "0.10.5"
+fragile = "2.0.0"
+color-eyre = "0.6.2"
+instant = "0.1.12"
+cpal = { version = "0.15.1", features = ["wasm-bindgen"] }
+symphonia = { version = "0.5.2", features = ["mp3"] }
+rubato = "0.12.0"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+wasm-bindgen = "0.2.84"
