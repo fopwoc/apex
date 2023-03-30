@@ -14,7 +14,6 @@ use winit::{event_loop::{EventLoop, ControlFlow}, window::WindowBuilder, event::
 #[cfg(not(target_arch = "wasm32"))] use winit::dpi::LogicalSize;
 
 #[cfg(target_arch = "wasm32")] use wasm_bindgen::prelude::*;
-#[cfg(target_arch = "wasm32")] use winit::window::Window;
 
 use crate::{config::Config, app::App};
 

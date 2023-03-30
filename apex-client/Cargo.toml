@@ -25,12 +25,7 @@ wcore = { path = "../wcore" }
 [lib]
 crate-type = ["cdylib", "rlib"]
 
-# running wasm-opt leads to sigsegv 11
 [package.metadata.wasm-pack.profile.release]
-wasm-opt = false
-
-# running wasm-opt leads to sigsegv 11
-[package.metadata.wasm-pack.profile.debug]
 wasm-opt = false
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
