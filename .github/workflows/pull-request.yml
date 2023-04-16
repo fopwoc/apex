@@ -1,0 +1,11 @@
+name: Check pull request
+
+on:
+  pull_request:
+    types: [ opened, reopened ]
+    paths-ignore:
+      - '*.md'
+
+jobs:
+  check:
+    uses: ./.github/workflows/check.yml

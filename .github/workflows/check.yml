@@ -1,0 +1,48 @@
+name: Check and lint
+
+on:
+  workflow_call:
+
+env:
+  target: "x86_64-unknown-linux-gnu"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Analyze
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          lfs: true
+      - name: Checkout LFS objects
+        run: git lfs checkout
+      - name: Install dependencies
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: libasound2-dev
+          version: ${{ env.target }}
+      - name: Set up cargo cache
+        uses: actions/cache@v3
+        continue-on-error: false
+        with:
+          path: |
+            ~/.cargo/registry/index/
+            ~/.cargo/registry/cache/
+            ~/.cargo/git/db/
+            target/
+          key: ${{ runner.os }}-cargo-${{ env.target }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: ${{ runner.os }}-cargo-${{ env.target }}
+      - name: Install Rust nightly
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: ${{ env.target }}
+          components: clippy, rustfmt
+      - name: Run cargo check
+        run: cargo check --locked --verbose --target ${{ env.target }} --package apex-client
+#      - name: Run cargo fmt code style
+#        run: cargo fmt --all -- --check
+      - name: Run cargo clippy
+        run: cargo clippy --all-features --all-targets -- -D warnings
+      - name: Run cargo audit
+        run: cargo audit
