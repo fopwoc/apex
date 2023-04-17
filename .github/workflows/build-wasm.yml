@@ -3,6 +3,9 @@ name: Build and deploy WASM
 on:
   workflow_call:
 
+permissions:
+  contents: write
+
 env:
   target: "wasm32-unknown-unknown"
 
